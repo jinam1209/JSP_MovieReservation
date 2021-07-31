@@ -1,0 +1,82 @@
+1.공지
+-네이밍: 인터페이스:MemDAO / 구현체:MemDAOImpl
+-작업물에 대한 주석 최대한 활용
+-log4j2 로컬 경로 수정해주세요~
+
+2.DB SQL문
+
+-- 5조 작업분
+
+create database groupFive;
+
+drop table IF EXISTS Member;
+drop table IF EXISTS Ticket;
+drop table IF EXISTS Schedule;
+drop table IF EXISTS Seat;
+drop table IF EXISTS Movie;
+drop table IF EXISTS qna;
+drop table IF EXISTS ans;
+drop table IF EXISTS qna_img;
+
+Create table Member (
+    memberNum int(10) NOT null auto_increment,
+    email varchar(50) NOT NULL,
+    pwd varchar(20) NOT NULL,
+ Primary Key (memberNum));
+
+Create table Ticket (
+    cfmNum int(10) NOT NULL,
+    scheduleNum int(10) NOT NULL,
+    seatNum int(10) NOT NULL,
+    moviNum int(10) not null,
+    email varchar(50) NOT NULL,
+ Primary Key (cfmNum));
+
+Create table Schedule (
+    scheduleNum int(10) NOT NULL,
+    viewDate varchar(20) NOT NULL,
+    viewTime varchar(20) not null,
+    moviNum int(10) not null,
+ Primary Key (scheduleNum));
+
+Create table Seat (
+    seatNum int(10) NOT NULL,
+    usable_seat Char(1) NOT NULL DEFAULT "N",
+    scheduleNum int(10) NOT NULL,
+ Primary Key (scheduleNum));
+
+Create table Movie (
+    moviNum int(10) not null  auto_increment,
+    viewable_movi Char(1) NOT NULL DEFAULT "Y",
+    moviName varchar(20),
+    moviRate varchar(10),
+    moviGenre varchar(20),
+    moviDesc varchar(1000),
+ Primary Key (moviNum));
+
+create table if not exists qna(
+    qnaNum bigint(20) primary key auto_increment,
+    memberNum int(20) not null,
+    askType varchar(20) default null,
+    email varchar(50) not null,
+    title varchar(200) default null,
+    content varchar(2000) default null,
+    askStatus  int(10) default 0,
+    imgfile varchar(2000) default null,
+    date timestamp default current_timestamp
+) ENGINE=InnoDB default charset=utf8;
+
+create table if not exists ans(
+    ansNum bigint(20) primary key auto_increment,
+    qnaNum bigint(20) not null,
+    answer varchar(2000) default null,
+    date timestamp default current_timestamp
+) ENGINE=InnoDB default charset=utf8;
+
+create table if not exists qna_img(
+imgNum bigint(20) primary key auto_increment,
+qnaNum bigint(20) not null,
+imgName varchar(2000) not null,
+imgType varchar(10) not null,
+imgDate timestamp not null default current_timestamp on update current_timestamp
+) ENGINE=InnoDB default charset=utf8;
